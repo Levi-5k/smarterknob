@@ -81,7 +81,7 @@ A few miscellaneous notes in the meantime:
 
 Future plans:
  - consider switch to using an ESP32-S3-MINI-1 module
- - get wifi configured and working (probably MQTT?). Currently memory is an issue with the full display framebuffer sprite. PSRAM might fix this (requires newer ESP-IDF & unreleased Arduino core, and from a brief test I got horrible performance with PSRAM enabled), or the next item might help reduce memory:
+ - get wifi configured and working (probably MQTT?). Currently memory is an issue with the full display framebuffer sprite. PSRAM might fix this (requires newer ESP-IDF & unreleased Arduino core, and from a brief test I got horrible performance with PSRAM enabled), or the next item might help reduce memory. A basic TCP server implementation is now available; see `doc/wifi_updates.md`.
  - migrate to LVGL, for better display rendering and easy support for menus, etc. Shouldn't require a full 240x240x24b framebuffer in memory, freeing some for wifi, etc.
  - Home Assistant integration, or other real-world applications
  - ???

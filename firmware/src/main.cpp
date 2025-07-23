@@ -3,6 +3,7 @@
 #include "configuration.h"
 #include "display_task.h"
 #include "interface_task.h"
+#include "wifi_server_task.h"
 #include "motor_task.h"
 
 Configuration config;
@@ -17,6 +18,9 @@ static MotorTask motor_task(1, config);
 
 
 InterfaceTask interface_task(0, motor_task, display_task_p);
+#if SK_WIFI
+WifiServerTask wifi_task(0, interface_task);
+#endif
 
 void setup() {
   #if SK_DISPLAY
@@ -36,6 +40,10 @@ void setup() {
 
   motor_task.setLogger(&interface_task);
   motor_task.begin();
+
+#if SK_WIFI
+  wifi_task.begin();
+#endif
 
   // Free up the Arduino loop task
   vTaskDelete(NULL);

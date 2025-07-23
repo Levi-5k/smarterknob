@@ -25,6 +25,7 @@ class InterfaceTask : public Task<InterfaceTask>, public Logger {
 
         void log(const char* msg) override;
         void setConfiguration(Configuration* configuration);
+        void applyRemoteConfig(const PB_SmartKnobConfig& config);
 
     protected:
         void run();
@@ -64,5 +65,5 @@ class InterfaceTask : public Task<InterfaceTask>, public Logger {
         void changeConfig(bool next);
         void updateHardware();
         void publishState();
-        void applyConfig(PB_SmartKnobConfig& config, bool from_remote);
+        void applyConfig(const PB_SmartKnobConfig& config, bool from_remote);
 };

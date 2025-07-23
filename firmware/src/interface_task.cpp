@@ -228,7 +228,7 @@ InterfaceTask::InterfaceTask(const uint8_t task_core, MotorTask& motor_task, Dis
         plaintext_protocol_(stream_, [this] () {
             motor_task_.runCalibration();
         }),
-        proto_protocol_(stream_, [this] (PB_SmartKnobConfig& config) {
+        proto_protocol_(stream_, [this] (const PB_SmartKnobConfig& config) {
             applyConfig(config, true);
         }) {
     #if SK_DISPLAY
@@ -476,13 +476,17 @@ void InterfaceTask::setConfiguration(Configuration* configuration) {
     configuration_ = configuration;
 }
 
+void InterfaceTask::applyRemoteConfig(const PB_SmartKnobConfig& config) {
+    applyConfig(config, true);
+}
+
 void InterfaceTask::publishState() {
     // Apply local state before publishing to serial
     latest_state_.press_nonce = press_count_;
     current_protocol_->handleState(latest_state_);
 }
 
-void InterfaceTask::applyConfig(PB_SmartKnobConfig& config, bool from_remote) {
+void InterfaceTask::applyConfig(const PB_SmartKnobConfig& config, bool from_remote) {
     remote_controlled_ = from_remote;
     latest_config_ = config;
     motor_task_.setConfig(config);
